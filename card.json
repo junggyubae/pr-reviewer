@@ -1,12 +1,13 @@
 {
   "name": "@junggyubae/pr-reviewer",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Intent-aligned PR reviewer with structured JSON output and six-criterion rubric",
   "skills": {
     "include": [
       "pr-reviewer",
       "l2-review-method",
-      "l2-use-harness-results"
+      "l2-use-harness-results",
+      "l1-harness-signals"
     ]
   },
   "persona": {
