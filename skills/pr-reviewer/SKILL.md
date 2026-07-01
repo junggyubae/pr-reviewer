@@ -51,9 +51,28 @@ the earlier stages have run.
   holds and why it is strong — not just that it passed.** Lead the `aligned`
   rationale with how the change matches (or diverges from) its stated intent and
   the repo's architecture.
-- Output exactly one JSON object matching the schema. No prose outside JSON.
 
-## Output Schema
+## Presentation by mode
+
+The review content is the same; the wrapper differs by caller.
+
+- **Harness / CI mode** (the PR head is checked out at `/repo`, or a machine is
+  parsing your output): emit **exactly one JSON object** matching the schema
+  below, with no prose before or after it.
+- **Interactive / chat mode** (a person asked you to review a PR link): lead with
+  a **chat-style summary**, not raw JSON. Render the same review readably:
+  1. **Verdict line** — one sentence: overall alignment + finding count
+     (e.g. "Strongly aligned; 1 medium finding, docs-only").
+  2. **Summary** — 1-3 sentences, leading with intent-alignment.
+  3. **Rubric at a glance** — the six criteria with `pass` / `concern` /
+     `not_evaluated` and a short reason each.
+  4. **Findings** — each as a readable item: severity + title, why it matters,
+     and the suggested direction. Say "no findings" plainly when clean.
+  5. **Tests** — one line (pass / fail / not_run / unknown).
+  Then offer the raw JSON ("say the word for the JSON") or append it under a
+  collapsed/last section — never lead with it, never omit the summary.
+
+## Output Schema (canonical form for both modes)
 
 Return:
 

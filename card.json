@@ -1,6 +1,6 @@
 {
   "name": "@junggyubae/pr-reviewer",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Intent-aligned PR reviewer with structured JSON output and six-criterion rubric",
   "skills": {
     "include": [
