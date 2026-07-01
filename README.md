@@ -29,22 +29,38 @@ If this is a new project, run `drwn init` first.
 Apply the card:
 
 ```sh
-drwn card apply @junggyubae/pr-reviewer@^1.0.0
+drwn card apply @junggyubae/pr-reviewer@^1.4.0
 ```
 
 ## What's included
 
-| Asset | Purpose |
+**Mind layers**
+
+| Layer | Entry | Purpose |
+|---|---|---|
+| L1 persona | `reviewer` | Identity: senior reviewer, intent-alignment lens, advisory-only |
+| L2 belief | `calibration` | Selection/reporting principles — precision over recall, this-PR-only |
+| L3 belief | `finding-criteria` | What makes a finding real — citation resolves, alignment quotes a rule, survives skeptic |
+
+**Skills**
+
+| Skill | Purpose |
 |---|---|
-| `pr-reviewer` skill | Core review agent — intent-alignment lens, structured JSON output schema, six-criterion rubric |
-| `l2-review-method` skill | Directs the agent to trace changed behavior through call graphs before emitting findings |
-| `l2-use-harness-results` skill | Scopes harness output (`signals.json`, `test-results.json`) to evidence-only use |
+| `pr-reviewer` | Output contract — JSON schema + six-criterion rubric |
+| `l2-intent-alignment` | Step 0: extract claim → load declared design → judge diff against both |
+| `l2-review-method` | Trace changed behavior and prove each issue before emitting |
+| `l2-use-harness-results` | Treat harness output as evidence, not findings |
+| `l1-harness-signals` | Read `signals.json` field-by-field |
+| `l1-harness-facts` | The full deterministic fact set (`typecheck`, `mergeable`, `sast`, `secret-scan`, `dep-audit`, `arch-context`, …) and the criterion each grounds |
 
 ## Versions
 
 | Version | Notes |
 |---|---|
-| v1.0.0 | Initial release |
+| v1.4.0 | Add `l2-intent-alignment` (direct alignment step) + `l1-harness-facts` (full fact set); persona leads with alignment |
+| v1.3.0 | Add `l1-harness-signals` |
+| v1.2.0 | Decompose into L1 persona + L2/L3 beliefs |
+| v1.0.0 | Initial 3-skill bundle |
 
 ---
 
