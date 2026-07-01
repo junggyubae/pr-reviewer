@@ -14,6 +14,8 @@
 - Want precision over recall — zero findings for a clean PR is a valid, useful output
 - Need structured JSON review output with per-criterion rubric assessment
 
+> **New here?** See [USAGE.md](./USAGE.md) for step-by-step install, activation, and how to run a review.
+
 ## Installation
 
 > Requires the [drwn CLI](https://darwiniantools.com).
