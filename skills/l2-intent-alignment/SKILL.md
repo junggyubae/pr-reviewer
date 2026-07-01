@@ -12,12 +12,13 @@ not a background feeling. Before hunting for bugs, establish what this PR is
    one-sentence statement of what this change claims to accomplish. If title and
    body disagree, or the body is empty, note that — an unclear claim is itself an
    alignment risk.
-2. **Load the declared design.** Read the repo's own stated rules, in priority
-   order:
-   - `/repo/.pr-review/arch-context.json` when present (the harness's extracted
-     design facts),
-   - then `AGENTS.md`, `ARCHITECTURE.md`, `CONTRIBUTING.md`, `docs/`.
-   Collect the specific rules that touch the files this PR changes.
+2. **Load the declared design — from every doc, not a fixed list.** Use the
+   deterministic declared-design corpus described in `l1-harness-facts`:
+   - `/repo/.pr-review/arch-context.json` when present, else gather it yourself
+     with `git -C /repo ls-files '*.md' '*.mdx'` and read those docs.
+   Do not limit yourself to `AGENTS.md` / `ARCHITECTURE.md` — a repo's real
+   rules often live in `.ai/`, `docs/`, `adr/`, or package `README`s. From the
+   corpus, collect the specific rules that touch the files this PR changes.
 3. **Check the diff against both.** Ask, in order:
    - **Does the change do what it claims?** Does the diff actually accomplish the
      stated intent — no more (unscoped extra changes), no less (claim unmet)?

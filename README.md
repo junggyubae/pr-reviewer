@@ -29,7 +29,7 @@ If this is a new project, run `drwn init` first.
 Apply the card:
 
 ```sh
-drwn card apply @junggyubae/pr-reviewer@^1.5.0
+drwn card apply @junggyubae/pr-reviewer@^1.6.0
 ```
 
 ## What's included
@@ -57,6 +57,7 @@ drwn card apply @junggyubae/pr-reviewer@^1.5.0
 
 | Version | Notes |
 |---|---|
+| v1.6.0 | `arch-context` signal now reads every repo `.md` doc (not a fixed AGENTS/ARCHITECTURE list) as the declared-design corpus for intent-alignment |
 | v1.5.0 | `pr-reviewer` skill now orchestrates the ordered pipeline (facts → intent-alignment → trace/prove → verify → output) |
 | v1.4.0 | Add `l2-intent-alignment` (direct alignment step) + `l1-harness-facts` (full fact set); persona leads with alignment |
 | v1.3.0 | Add `l1-harness-signals` |

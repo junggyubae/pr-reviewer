@@ -19,13 +19,44 @@ given run may emit a subset. Absence of a file is not evidence of safety.
 | `test-results.json` | Tested, Correct | ran? passed? command, exit code — see `l2-use-harness-results` | live |
 | `typecheck.json` | Correct | `{ ran, passed, errors[] }` — type/build errors introduced by the PR | live |
 | `mergeable.json` | Mergeable | `{ mergeable, mergeable_state, conflicts, failing_checks[] }` — merge state + red CI checks | live |
-| `arch-context.json` | Aligned | the repo's declared design/rules extracted from its own docs | planned |
+| `arch-context.json` | Aligned | **every `.md` document in the repo**, collected into one declared-design corpus — see below | live (agent-gathered) |
 | `arch-fitness.json` | Aligned | import-boundary / layering violations | planned |
 | `sast.json` | Correct, Safe | semgrep static-analysis hits | planned |
 | `secret-scan.json` | Safe | gitleaks secret hits | planned |
 | `dep-audit.json` | Safe | osv dependency CVEs | planned |
 | `lint.json` | Readable | lint/format violations | planned |
 | `api-diff.json` | Mergeable | exported-surface / semver-breaking changes | planned |
+
+## Declared-design corpus (`arch-context`)
+
+Do not assume a repo keeps its design in `AGENTS.md` / `ARCHITECTURE.md`. Many
+repos put the load-bearing rules elsewhere (`.ai/analyses/`, `.ai/tasks/`,
+`docs/`, `adr/`, package-level `README`s). So the alignment fact is gathered
+**deterministically from every markdown document in the repo**, not a fixed
+file list.
+
+Gather it before reviewing:
+
+1. **Find every `.md` / `.mdx` document** tracked in the repo. Use the repo's
+   own file list so vendored/generated docs are excluded:
+   ```bash
+   git -C /repo ls-files '*.md' '*.mdx'
+   ```
+   This already omits `node_modules`, `dist`, and other git-ignored trees.
+2. **Save the corpus** to `/repo/.pr-review/arch-context.json` as an array of
+   `{ "path": "<repo-relative>", "content": "<full text>" }`. This is the
+   deterministic declared-design signal the `aligned` criterion cites against.
+3. **Prioritize when the corpus is large.** Root `*.md`, `docs/`, `.ai/`,
+   `adr/`, and any file whose changed paths this PR touches come first; deep or
+   peripheral docs come last. Never silently drop docs — if you cap for size,
+   record which paths were not fully read.
+
+*Interactive mode:* no harness writes the file, so gather the corpus yourself
+with the `git ls-files` command above and hold it in context; the reviewer is
+responsible for reading the docs, not just the fixed AGENTS/ARCHITECTURE set.
+
+An `aligned` finding must quote a rule from this corpus by `path` + line/section
+(see `finding-criteria`). A rule that is not in the corpus is not a violation.
 
 ## How facts set severity
 
