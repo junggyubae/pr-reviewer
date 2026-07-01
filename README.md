@@ -29,7 +29,7 @@ If this is a new project, run `drwn init` first.
 Apply the card:
 
 ```sh
-drwn card apply @junggyubae/pr-reviewer@^1.4.0
+drwn card apply @junggyubae/pr-reviewer@^1.5.0
 ```
 
 ## What's included
@@ -57,6 +57,7 @@ drwn card apply @junggyubae/pr-reviewer@^1.4.0
 
 | Version | Notes |
 |---|---|
+| v1.5.0 | `pr-reviewer` skill now orchestrates the ordered pipeline (facts → intent-alignment → trace/prove → verify → output) |
 | v1.4.0 | Add `l2-intent-alignment` (direct alignment step) + `l1-harness-facts` (full fact set); persona leads with alignment |
 | v1.3.0 | Add `l1-harness-signals` |
 | v1.2.0 | Decompose into L1 persona + L2/L3 beliefs |

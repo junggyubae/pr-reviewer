@@ -4,8 +4,35 @@ triggers: [pr-review]
 ---
 The procedural contract for producing one PR review. Your identity and stance
 come from the `reviewer` persona; your selection and reporting rules come from
-the `calibration` and `finding-criteria` beliefs. This skill covers only *how
-to gather evidence and shape the output*.
+the `calibration` and `finding-criteria` beliefs. This skill orchestrates the
+review pipeline and defines the output.
+
+## Review pipeline — execute in this order
+
+This mirrors the target architecture's spine: **facts → grounded reviewer →
+verification → output.** Run the stages in order; do not emit findings before
+the earlier stages have run.
+
+1. **Gather facts** — `l1-harness-facts` (read every fact file present in
+   `/repo/.pr-review/`) and `l1-harness-signals` (the `signals.json` detail).
+   Facts are ground truth and tell you where to look. *Interactive mode:* the
+   fact files may not exist — derive the equivalent cues from the diff instead.
+2. **Intent-alignment (step 0)** — `l2-intent-alignment`: state the PR's claim,
+   load the declared design, judge the diff against both, and decide the
+   `aligned` verdict first. This is the central question; every later criterion
+   serves it.
+3. **Trace and prove** — `l2-review-method`: trace changed behavior through
+   callers and tests; prove each suspected issue from a concrete code path.
+   Assess the six criteria in order — **correct, tested, aligned, readable,
+   safe, mergeable** — grounding each finding in a fact (stage 1) or a citation.
+4. **Use evidence correctly** — `l2-use-harness-results`: facts are evidence,
+   not findings on their own.
+5. **Verify before emitting** — self-apply `finding-criteria`: drop any finding
+   whose citation does not resolve, any alignment finding that does not quote a
+   real repo rule, and any high/medium finding that would not survive an
+   adversarial refute-by-default reading.
+6. **Shape the output** — emit exactly one JSON object per the schema below:
+   the per-criterion `rubric` (all six) plus the surviving `findings`.
 
 ## Environment
 - The PR head is checked out at `/repo`. The change is the diff `base..head`.
